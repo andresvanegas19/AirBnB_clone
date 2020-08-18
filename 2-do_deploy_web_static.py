@@ -35,6 +35,7 @@ def do_pack():
         print("web_static packed: {} -> {}Bytes".format(files, size))
         return files
 
+
 def do_deploy(archive_path):
     """ distributes an archive to your web servers, using the function
     do_deploy """
@@ -56,7 +57,6 @@ def do_deploy(archive_path):
         command = sudo('mkdir -p {}'.format(path))
         if not command.__dict__['succeeded']:
             return False
-
 
         # Uncompress the archive to the folder
         command = sudo('tar -xvf /tmp/{} -C {}'.format(archive_path, path))
