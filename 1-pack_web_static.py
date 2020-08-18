@@ -4,6 +4,7 @@ from datetime import datetime
 from fabric.api import (local, hide, settings)
 
 
+
 def do_pack():
     """ generates a .tgz archive from the contents
     of the web_static folder of your AirBnB Clone
@@ -13,15 +14,13 @@ def do_pack():
         files = datetime.now().strftime("versions/web_static_%Y%m%d%H%M%S.tgz")
         with hide('output', 'running'):
             command = local('mkdir versions')
-
-        if command.return_code != 0:
-            return None
+            if command.return_code != 0:
+                return None
 
         print('Packing web_static to {} web_static'.format(files))
 
         # with hide('stdout', 'running'):
         command = local('tar -cvzf {} web_static'.format(files))
-
         if command.return_code != 0:
             return None
 
