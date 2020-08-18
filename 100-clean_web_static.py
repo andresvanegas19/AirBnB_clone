@@ -29,7 +29,7 @@ def do_pack():
 
             print("web_static packed: {} -> {}Bytes".format(files, size))
             return files
-        except as ex:
+        except Exception as ex:
             return None
 
 
@@ -109,5 +109,5 @@ def do_clean(number=0):
     path = '/data/web_static/releases'
 
     local('cd versions; ls -t | tail -n +{} | xargs rm -rf'.format(number))
-    run('cd {}; ls -t | grep web_static | tail -n +{}| xargs rm -rf'
+    sudo('cd {}; ls -t | grep web_static | tail -n +{}| xargs rm -rf'
         .format(path, number))

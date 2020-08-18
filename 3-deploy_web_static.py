@@ -29,7 +29,7 @@ def do_pack():
 
             print("web_static packed: {} -> {}Bytes".format(files, size))
             return files
-        except as ex:
+        except Exception as ex:
             return None
 
 
