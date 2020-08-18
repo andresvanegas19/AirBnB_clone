@@ -29,8 +29,9 @@ def do_pack():
 
             print("web_static packed: {} -> {}Bytes".format(files, size))
             return files
-        except:
+        except as ex:
             return None
+
 
 def do_deploy(archive_path):
     """ distributes an archive to your web servers, using the function
