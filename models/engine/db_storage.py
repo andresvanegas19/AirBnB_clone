@@ -1,16 +1,16 @@
 #!/usr/bin/python3
 """ Make your code running without knowing how it’s stored. """
-from sqlalchemy.engine.url import URL
-from sqlalchemy import create_engine
-from sqlalchemy.orm import (sessionmaker, scoped_session)
 import os
 from models.user import User
-from models.place import Place
-from models.base_model import Base
 from models.city import City
 from models.state import State
-from models.amenity import Amenity
+from models.place import Place
 from models.review import Review
+from models.amenity import Amenity
+from models.base_model import Base
+from sqlalchemy import create_engine
+from sqlalchemy.engine.url import URL
+from sqlalchemy.orm import (sessionmaker, scoped_session)
 
 
 class DBStorage:
@@ -46,7 +46,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
 
         Session = scoped_session(Session_m)
-        self.__session = Session()
+        self.__session = Session
 
     def new(self, obj):
         """add the object to the current database session """
@@ -62,27 +62,19 @@ class DBStorage:
             self.__session.delete(obj)
 
     def all(self, cls=None):
-        """ This method is for retrive information from
-        other data base
-        query on the current database session (self.__session)
-        all objects depending of the class name (argument cls)
-        if cls=None, query all types of objects (User, State, City, Amenity,
-        Place and Review)
-        this method must return a dictionary: (like FileStorage)"""
+        """query on the current database session"""
+        new_clss = {"Place": Place, "User": User, "State": State,
+                    "Amenity": Amenity, "City": City, "Review": Review}
         result = {}
-        if cls:
-            for value in self.__session.query(cls).all():
-                key = (type(value).__name__ + '.' + value.id)
-                result[key] = value
-        else:
-            classes = [State, City, User, Place, Review, Amenity]
-            for clas in classes:
-                for value in self.__session.query(clas).all():
-                    key = (type(value).__name__ + '.' + value.id)
-                    result[key] = value
-        return result
+        for clss in new_clss:
+            if not cls or cls in new_clss:
+                objs = self.__session.query(new_clss[clss]).all()
+                for obj in objs:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    result[key] = obj
+        return (result)
 
     def close(self):
         """ method on the private session attribute (self.__session)
         or close() on the class Session """
-        self.__session.close()
+        self.__session.remove()

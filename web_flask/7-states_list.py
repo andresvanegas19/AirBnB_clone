@@ -1,22 +1,22 @@
 from flask import Flask, render_template
 from models import storage
+from models import *
 """ An application server """
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 @app.teardown_appcontext
-def close():
+def close(self):
      """ This function provide a method to close an session of
      the storage"""
      storage.close()
 
 
-@app.route('/display')
+@app.route('/states_list')
 def home():
     """ an simply routing to display a list of the state """
-    print(storage.all('State'))
-    return render_template('7-states_list.html')
+    return render_template('7-states_list.html', states=storage.all('State').values())
 
 
 if __name__ == '__main__':
