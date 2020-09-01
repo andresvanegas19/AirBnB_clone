@@ -81,3 +81,8 @@ class DBStorage:
                     key = (type(value).__name__ + '.' + value.id)
                     result[key] = value
         return result
+
+    def close(self):
+        """ method on the private session attribute (self.__session)
+        or close() on the class Session """
+        self.__session.close()
