@@ -14,12 +14,28 @@ def close(self):
     storage.close()
 
 
-@app.route('/states_list')
-def home():
+@app.route('/states')
+def local():
     """ an simply routing to display a list of the state """
-    return render_template('8-cities_by_states.html',
-                           states=storage.all('State').values(),
-                           cities=storage.all('City').values())
+    return render_template('7-states_list.html',
+                           states=storage.all('State').values())
+
+
+@app.route('/states/<string:value>')
+def local_with_state(value):
+    """ an simply routing to display a list of the state """
+    clases = storage.all().values()
+    result = []
+    name = None
+    for clase in clases:
+        if value == clase.id:
+            name= clase.name
+        if clase.__class__.__name__ == 'City':
+            if value == clase.state_id:
+                result.append(clase)
+
+    return render_template('9-states.html',cities=result, name_state=name)
+
 
 
 if __name__ == '__main__':
