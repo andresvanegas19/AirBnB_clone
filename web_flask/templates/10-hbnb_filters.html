@@ -2,62 +2,69 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="styles/4-common.css">
-	<link rel="stylesheet" href="styles/6-filters.css">
-	<link rel="stylesheet" href="styles/3-footer.css">
-	<link rel="stylesheet" href="styles/3-header.css">
-	<link rel="icon" href="images/icon.png" type="image/png">
-	<title>AirBnb Clone</title>
+     <meta charset="utf-8">
+     <link rel="stylesheet" href="../static/styles/4-common.css">
+     <link rel="stylesheet" href="../static/styles/6-filters.css">
+     <link rel="stylesheet" href="../static/styles/3-footer.css">
+     <link rel="stylesheet" href="../static/styles/3-header.css">
+     <link rel="icon" href="images/icon.png" type="image/png">
+     <title>AirBnb Clone</title>
 </head>
 
 <body>
-	<header>
-		<div class="logo">
-		</div>
-	</header>
-	<div class="container">
-		<section class="filters">
-			<div class="locations">
-				<h3>States</h3>
-				<h4>California, New York...</h4>
-				<ul class="popover">
-					<li>
-						<h2>California:</h2>
-						<ul>
-							<li>San Francisco</li>
-							<li>Mountain View</li>
-						</ul>
-					</li>
-					<li>
-						<h2>New York:</h2>
-						<ul>
-							<li>Manhattan</li>
-							<li>Brooklyn</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-			<div class="amenities">
-				<h3>Amenities</h3>
-				<h4>Laundry, Internet...</h4>
-				<ul class="popover">
-					<li>Laundry</li>
-					<li>Internet</li>
-					<li>Television</li>
-					<li>Pool</li>
-				</ul>
-			</div>
-			<button>
-				Search
-			</button>
-		</section>
-	</div>
-	<footer>
-		<p>
-			Holberton School
-		</p>
-	</footer>
+     <header>
+          <div class="logo">
+          </div>
+     </header>
+     <div class="container">
+          <section class="filters">
+               <div class="locations">
+                    <h3>&nbsp;States&nbsp;</h3>
+                    <h4>&nbsp;</h4>
+                    <ul class="popover">
+                         {% for state in states | sort(attribute="name") %}
+                         <li>
+                              <h2>&nbsp;{{ state.name }}&nbsp;</h2>
+                              <ul>&nbsp;
+                                   {% for city in cities | sort(attribute="name") -%}
+                                   {% if city.state_id == state.id -%}
+                                   <li>&nbsp;{{ city.name }}&nbsp;</li>
+                                   {%- endif %}
+                                   {%- endfor %}
+                                   &nbsp;</ul>
+                         </li>
+                         {% else %}
+                         <li>&nbsp;
+                              <h1>Not found states</h1>
+                              &nbsp;</li>
+                         {% endfor %}
+                    </ul>
+               </div>
+               <div class="amenities">
+                    <h3>&nbsp;Amenities&nbsp;</h3>
+                    <h4>&nbsp;</h4>
+                    <ul class="popover">
+                         {% if amenities -%}
+                         {% for amenaty in amenities | sort(attribute="name") %}
+                         <li>&nbsp;{{ amenaty.name }}&nbsp;</li>
+                         {% endfor %}
+                         {% else %}
+                         <li>&nbsp;
+                              <h1>Not found amenities</h1>
+                         &nbsp;</li>
+                         {%- endif %}
+                    </ul>
+               </div>
+               <button>
+                    Search
+               </button>
+          </section>
+     </div>
+     <footer>
+          <p>
+               Holberton School
+          </p>
+     </footer>
 </body>
 
 </html>

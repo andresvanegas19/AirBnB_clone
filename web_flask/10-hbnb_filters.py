@@ -17,24 +17,15 @@ def close(self):
 @app.route('/hbnb_filters')
 def local():
     """ an simply routing to display a list of the state """
-    return render_template('static/10-hbnb_filters.html',
-                           states=storage.all('State').values())
-
-
-@app.route('/states/<string:value>')
-def local_with_state(value):
-    """ an simply routing to display a list of the state """
-    clases = storage.all().values()
     result = []
-    name = None
-    for clase in clases:
-        if value == clase.id:
-            name= clase.name
-        if clase.__class__.__name__ == 'City':
-            if value == clase.state_id:
-                result.append(clase)
+    for clase in storage.all().values():
+        if clase.__class__.__name__ == 'Amenity':
+            result.append(clase)
 
-    return render_template('9-states.html',cities=result, name_state=name)
+    return render_template('10-hbnb_filters.html',
+                           states=storage.all('State').values(),
+                           cities=storage.all('City').values(),
+                           amenities=result)
 
 
 
