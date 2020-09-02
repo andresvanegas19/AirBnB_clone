@@ -1,6 +1,7 @@
 #!/usr/bin/python3
-from flask import Flask, render_template
 """ An application server """
+
+from flask import Flask, render_template
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -35,6 +36,7 @@ def python(value="is_cool"):
 def number(value):
     """ an simply routing with the default parameters """
     return '%d is a number' % value
+
 
 @app.route('/number_template/<int:value>')
 def number_template(value):

@@ -1,7 +1,10 @@
+#!/usr/bin/python3
+""" An application server """
+
 from flask import Flask, render_template
 from models import storage
 from models import *
-""" An application server """
+
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -29,13 +32,12 @@ def local_with_state(value):
     name = None
     for clase in clases:
         if value == clase.id:
-            name= clase.name
+            name = clase.name
         if clase.__class__.__name__ == 'City':
             if value == clase.state_id:
                 result.append(clase)
 
-    return render_template('9-states.html',cities=result, name_state=name)
-
+    return render_template('9-states.html', cities=result, name_state=name)
 
 
 if __name__ == '__main__':

@@ -1,7 +1,10 @@
+#!/usr/bin/python3
+""" An application server """
+
 from flask import Flask, render_template
 from models import storage
 from models import *
-""" An application server """
+
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -26,7 +29,6 @@ def local():
                            states=storage.all('State').values(),
                            cities=storage.all('City').values(),
                            amenities=result)
-
 
 
 if __name__ == '__main__':

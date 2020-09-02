@@ -1,5 +1,8 @@
-from flask import Flask, render_template
+#!/usr/bin/python3
 """ An application server """
+
+from flask import Flask, render_template
+
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
